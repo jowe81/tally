@@ -1,12 +1,25 @@
 const constants = {
- "MQTT_SERVER": "mqtt://192.168.1.153",
- "TOPIC": "mpct/update/#",
- "TALLY_CONTROLLER_NAME": "Tally", //name of MPCT controller that generates the Tally messages
+  
+  //Broker address with protocol (mqtt://...)
+  "MQTT_SERVER": "mqtt://192.168.1.153",
+ 
+  //Subscribe to...
+  "TOPIC": "mpct/update/#",
+ 
+  //Name of MPCT controller that generates the Tally messages
+  "TALLY_CONTROLLER_NAME": "Tally", 
+
+  //Information for cameras to be listened for/reported
+  // {
+  //   tallyServerDevNo, //MPCT # on the Tally Server/MPCT controller
+  //   no,               //Cam # as the director would call it out
+  //   name,             //Full descriptive name
+  // },
 
   "CAMERAS": [
     {
-      tallyServerDevNo: 0, //MPCT # on the Tally Server/MPCT controller
-      no: 1,
+      tallyServerDevNo: 0, 
+      no: 1,               
       name: "tight follow"
     },
     {
