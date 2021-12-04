@@ -4,43 +4,76 @@ const logPrefix = "tally";
 const constants = require("./constants");
 const mqttClient = require("./mqttClient");
 
-const TALLY_TYPES = [ "PGM", "PVW" ];
+const PGM = "PGM", PVW = "PVW";
+const TALLY_TYPES = [ PGM, PVW ];
 
-//Keep tally data of this form:
-// "cameraNo": {
-//               tallyServerDevNo: 1,
-//               no: 2,
-//               name: "wide follow",
-//             }
 
-const initTallyObject = (cameras) => {
-  const tally = {};
-  for (cam of cameras) {
-    tally[cam.tallyServerDevNo] = cam;
-    //If a camera number is not provided, fall back to the name
-    if (tally[cam.tallyServerDevNo].no === undefined) {
-      tally[cam.tallyServerDevNo].no = tally[cam.tallyServerDevNo].name;
+//*************** INIT ***********************************
+
+//Keep tally data of this form in global object "live":
+// {      
+//   name: 1,                     //As the director calls it
+//   description: "tight follow", //Camera description
+//   tallies: [                   //Can have one or two tallies (PGM/PVW)
+//     { deviceNo: 0,             //Device # on MPCT Controller for this tally
+//       type: "PGM" },           //If type is missing, we default to PGM
+//     { deviceNo: 1,             //Device # on MPCT Controller for this tally
+//       type: "PVW"},
+//   ]
+// },
+const initLiveObject = (cameras) => {
+  const liveObj = [];
+  for (const cam of cameras) {
+    const thisRecord = cam;
+    for (const tally of thisRecord.tallies) {
+      if (!TALLY_TYPES.includes(tally.type)) {
+        tally.type = PGM; //default to program
+      }
     }
-    //If no type specified, default to PGM
-    if (!TALLY_TYPES.includes(tally[cam.tallyServerDevNo].type)) {
-      tally[cam.tallyServerDevNo].type=TALLY_TYPES[0];
-    }
-    //Init as off-air
-    tally[cam.tallyServerDevNo].on = false;
-  }  
-  lg(`Initialized tally object with ${cameras.length} cameras`, logPrefix);
-  console.log(tally);
-  return tally;
+    liveObj.push(thisRecord);
+  }
+  liveObj.forEach(x => console.log(x));
+  return liveObj;
 }
 
-//Generate the tally object with camera data from constants.js
-const tally = initTallyObject(constants.CAMERAS);
+//Generate the live object with camera data from constants.js
+const live = initLiveObject(constants.CAMERAS);
 
 
+
+//*************** RUN ************************************
 
 //Gets called from server.js
 // tallChangeCb(cameraObject) will be called on changes
 const run = (tallyChangeCb) => {
+
+  //Extract camera object from live data by MPCT controller device #
+  const getCameraFromDevNo = (devNo) => {
+    for (cam of live) {
+      for (const tallyRecord of cam.tallies) {
+        if (tallyRecord.deviceNo == devNo) {
+          return cam;
+        }
+      }
+    }
+    //No camera with a tally with devNo exists
+    return undefined;
+  }
+
+  //Extract tally record from live camera object by MPCT controller device #
+  const getTallyRecordFromDevNo = (devNo) => {
+    //Find the camera first
+    const cam = getCameraFromDevNo(devNo);
+    if (cam) {
+      //Found the camera, no see if it has a tally object with devNo
+      for (record of cam.tallies) {
+        if (record.deviceNo === devNo) {
+          return record;
+        }
+      }
+    }
+    return undefined;
+  }
 
   //Extract MPCT device # from the topic
   const getTallyServerDevNo = (topic) => {
@@ -48,19 +81,23 @@ const run = (tallyChangeCb) => {
     const fullDeviceName = path[path.length - 1]; //Tally1.tally
     const deviceName = fullDeviceName.split('.')[0]; //Tally1
     const getTallyServerDevNo = deviceName.substr(constants.TALLY_CONTROLLER_NAME.length);
-    return getTallyServerDevNo;
+    return parseInt(getTallyServerDevNo);
   }
 
-  //Register a change in the tally object
+  //Register a tally change in the live object
   const processTallyChange = (tallyServerDevNo, value) => {
-    if (tally[tallyServerDevNo]) {
+    //Get the camera object from live data
+    const cam = getCameraFromDevNo(tallyServerDevNo);
+    //Get the tally object from camera's live data (yes, need both!)
+    const tallyRecord = getTallyRecordFromDevNo(tallyServerDevNo);
+    if (tallyRecord) {      
       const boolVal = Boolean(value);
       //Only update if value actually changed
-      if (tally[tallyServerDevNo].on !== boolVal) {
-        tally[tallyServerDevNo].on = boolVal;
-        lg(`Camera ${tally[tallyServerDevNo].no} is now ${boolVal ? "on" : "off"} air`, logPrefix);
+      if (tallyRecord.on !== boolVal) {
+        tallyRecord.on = boolVal;
+        lg(`Camera ${cam.name} is now ${tallyRecord.on ? "on" : "off"} ${tallyRecord.type}`, logPrefix);
         //Invoke the callback with the respective camera object
-        tallyChangeCb(tally[tallyServerDevNo]);
+        tallyChangeCb(cam);
       }  
     } else {
       //Got data for a camera/device that's not configured in constants.js

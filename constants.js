@@ -10,53 +10,81 @@ const constants = {
   "TALLY_CONTROLLER_NAME": "Tally", 
 
   //Information for cameras to be listened for/reported
-  // {
-  //   tallyServerDevNo, //MPCT # on the Tally Server/MPCT controller
-  //   no,               //Cam # as the director would call it out
-  //   name,             //Full descriptive name
-  //   type,             //PGM (program, default) or PVW (preview)
-  // },
-
   "CAMERAS": [
-    {
-      tallyServerDevNo: 0, 
-      no: 1,               
-      name: "tight follow"
+    {      
+      name: 1,               
+      description: "tight follow",
+      tallies: [
+        { deviceNo: 0,
+          type: "PGM" },
+        { deviceNo: 1,
+          type: "PVW"},
+      ]
     },
-    {
-      tallyServerDevNo: 1,
-      no: 2,
-      name: "wide follow",
+    {      
+      name: 2,               
+      description: "wide follow",
+      tallies: [
+        { deviceNo: 2 },
+        { deviceNo: 3,
+          type: "PVW"},
+      ]
     },
-    {
-      tallyServerDevNo: 2,
-      no: 3,
-      name: "PTZ rear",
+    {      
+      name: 3,               
+      description: "PTZ house",
+      tallies: [
+        { deviceNo: 4 },
+        { deviceNo: 5,
+          type: "PVW"},
+      ]
     },
-    {
-      tallyServerDevNo: 3,
-      no: 4,
-      name: "PTZ stage",
+    {      
+      name: 4,               
+      description: "PTZ stage",
+      tallies: [
+        { deviceNo: 6 },
+        { deviceNo: 7,
+          type: "PVW"},
+      ]
     },
-    {
-      tallyServerDevNo: 4,
-      no: 5,
-      name: "Handheld",
+    {      
+      name: 5,               
+      description: "Handheld",
+      tallies: [
+        { deviceNo: 9 },
+        { deviceNo: 10,
+          type: "PVW"},
+      ]
     },
-    {
-      tallyServerDevNo: 5,
-      no: 6,
-      name: "GoPro/Extra",
+    {      
+      name: 6,               
+      description: "POV",
+      tallies: [
+        { deviceNo: 11 },
+        { deviceNo: 12,
+          type: "PVW"},
+      ]
     },
-    {
-      tallyServerDevNo: 6,
-      name: "PrP Main",
+    {      
+      name: "PrP Broadcast",             
+      description: "",
+      tallies: [
+        { deviceNo: 13 },
+        { deviceNo: 14,
+          type: "PVW"},
+      ]
     },
-    {
-      tallyServerDevNo: 7,
-      name: "PrP Keyed",
+    {      
+      name: "PrP Main",               
+      description: "",
+      tallies: [ { deviceNo: 15 } ],
     },
-
+    {      
+      name: "PrP Keyed",               
+      description: "",
+      tallies: [ { deviceNo: 16 } ],
+    },
 
   ]
  
