@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/jowe81/tally.git"
   },
-  "keywords": ["tally", "Ross", "Carbonite"],
+  "keywords": [
+    "tally",
+    "Ross",
+    "Carbonite"
+  ],
   "author": "Johannes Weber (jowe.ca)",
   "license": "ISC",
   "bugs": {
@@ -19,6 +23,8 @@
   "homepage": "https://github.com/jowe81/tally#readme",
   "dependencies": {
     "@jowe81/lg": "^1.0.0",
-    "mqtt": "^4.2.8"
+    "express": "^4.17.1",
+    "mqtt": "^4.2.8",
+    "socket.io": "^4.4.0"
   }
 }

@@ -1,5 +1,8 @@
 const constants = {
   
+  //Port for Express
+  "PORT": 32800,
+
   //Broker address with protocol (mqtt://...)
   "MQTT_SERVER": "mqtt://192.168.1.153",
  
