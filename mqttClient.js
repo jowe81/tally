@@ -1,18 +1,18 @@
 const mqtt = require("mqtt");
 
-const { lg, prefix } = require("@jowe81/lg");
-prefix.set("mqtt");
+const { lg } = require("@jowe81/lg");
+const logPrefix = "mqtt";
 
 const connect = (server, topic, messageHandler) => {
-  lg(`Attempting to connect to ${server}...`);
+  lg(`Attempting to connect to ${server}...`, logPrefix);
   const client = mqtt.connect(server);
 
   client.on('connect', () => {
-    lg(`Connected to ${server}!`);  
+    lg(`Connected to ${server}!`, logPrefix);  
 
     client.subscribe(topic, function (err) {
       if (!err) {
-        lg(`Subscribed to ${topic}`);
+        lg(`Subscribed to ${topic}`, logPrefix);
       }
     })
 

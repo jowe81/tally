@@ -1,4 +1,5 @@
-const { lg, prefix } = require("@jowe81/lg");
+const { lg } = require("@jowe81/lg");
+const logPrefix = "tally";
 
 const constants = require("./constants");
 const mqttClient = require("./mqttClient");
@@ -22,15 +23,17 @@ const initTallyObject = (cameras) => {
     }
     tally[cam.tallyServerDevNo].on = false;
   }  
+  lg(`Initialized tally object with ${cameras.length} cameras`, logPrefix);
+  console.log(tally);
   return tally;
 }
 
 //Generate the tally object with camera data from constants.js
 const tally = initTallyObject(constants.CAMERAS);
-console.log(tally);
 
 
-//Gets called from the web server
+
+//Gets called from server.js
 // tallChangeCb(cameraObject) will be called on changes
 const run = (tallyChangeCb) => {
 
@@ -50,7 +53,7 @@ const run = (tallyChangeCb) => {
       //Only update if value actually changed
       if (tally[tallyServerDevNo].on !== boolVal) {
         tally[tallyServerDevNo].on = boolVal;
-        lg(`Camera ${tally[tallyServerDevNo].no} is now ${boolVal ? "on" : "off"} air`);
+        lg(`Camera ${tally[tallyServerDevNo].no} is now ${boolVal ? "on" : "off"} air`, logPrefix);
         //Invoke the callback with the respective camera object
         tallyChangeCb(tally[tallyServerDevNo]);
       }  
@@ -65,7 +68,7 @@ const run = (tallyChangeCb) => {
     try {
       msg = JSON.parse(message.toString());
     } catch (e) {
-      lg(`Error: couldn't JSON.parse incoming message: ${message}`);
+      lg(`Error: couldn't JSON.parse incoming message: ${message}`, logPrefix);
     }
     //Message should look like this:
     //  {"data":{"status":{"value":false,"raw":1,"readMode":"interrupt","readAt":1638574812001}},"error":false}

@@ -1,5 +1,5 @@
-const tally = require('./tally');
+const constants = require("constants");
 
-tally.run((camObj) => {
-  
-});
+
+
+module.exports = {};
