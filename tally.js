@@ -16,6 +16,10 @@ const initTallyObject = (cameras) => {
   const tally = {};
   for (cam of cameras) {
     tally[cam.tallyServerDevNo] = cam;
+    if (tally[cam.tallyServerDevNo].no === undefined) {
+      //If a camera number is not provided, fall back to the name
+      tally[cam.tallyServerDevNo].no = tally[cam.tallyServerDevNo].name;
+    }
     tally[cam.tallyServerDevNo].on = false;
   }  
   return tally;
