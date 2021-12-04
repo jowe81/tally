@@ -1,3 +1,5 @@
+//mqttClient.js: connect to broker and listen for messages
+
 const mqtt = require("mqtt");
 
 const { lg } = require("@jowe81/lg");
