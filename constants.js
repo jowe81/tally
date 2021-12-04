@@ -14,6 +14,7 @@ const constants = {
   //   tallyServerDevNo, //MPCT # on the Tally Server/MPCT controller
   //   no,               //Cam # as the director would call it out
   //   name,             //Full descriptive name
+  //   type,             //PGM (program, default) or PVW (preview)
   // },
 
   "CAMERAS": [

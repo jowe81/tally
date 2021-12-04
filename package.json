@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/jowe81/tally.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["tally", "Ross", "Carbonite"],
+  "author": "Johannes Weber (jowe.ca)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jowe81/tally/issues"
