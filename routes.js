@@ -1,8 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function (req, res) {
-  res.send('Home page');
+router.get('/', (req, res) => {
+  res.render('index');
 })
+
+router.get('/tally', (req, res) => {
+  res.render('tally');
+});
 
 module.exports = router;

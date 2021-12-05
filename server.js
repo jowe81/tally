@@ -1,20 +1,14 @@
 //server.js: Entry point for Tally App
 
 const webServer = require('./webServer');
-const socketServer = require('./socketServer');
 const tally = require('./tally');
 const { lg } = require('@jowe81/lg');
 const logPrefix = "server";
 
-//Broadcast the camera object on which the tally change occurred
-const broadcastTallyChange = (camObj) => socketServer.getIO().emit(camObj);
-
-
+//Start services
 lg(`Starting Tally App...`, logPrefix);
-
-//Start services in order
-webServer.run()
-  .then(() => socketServer.run(webServer.getApp()))
-  .then(() => tally.run(broadcastTallyChange) )
-  .then(() => lg(`All services are up and running`, logPrefix));
-
+Promise.all([webServer.run(), tally.run(webServer.getIO())]).then(() => {
+  lg(`All services are up and running`, logPrefix)
+}).catch(() => {
+  lg(`Error: Server failed to start.`, logPrefix);
+});

@@ -7,7 +7,7 @@ const live = require("./lib/live"); //Data handling module
 
 //Gets called from server.js
 // tallyChangeCb(cameraObject) will be called on changes
-const run = (tallyChangeCb) => {
+const run = (io) => {
 
   return new Promise((resolve, reject) => {
 
@@ -15,6 +15,11 @@ const run = (tallyChangeCb) => {
     lg(`Initializing live data module...`, logPrefix);
     const registered = live.init(constants.CAMERAS, constants.TALLY_CONTROLLER_NAME);
     lg(`Registered ${registered.sources} cameras/sources on ${registered.lines} tally lines`, logPrefix);
+
+    //Send snapshot of live data to each new client
+    io.on("connect", (socket) => {
+      socket.emit("snapshot", live.getLiveData());
+    });
 
     //Interpret incoming message and register tally change
     const messageHandler = (topic, message) => {
@@ -31,7 +36,8 @@ const run = (tallyChangeCb) => {
         //If an actual change was registered, we'll get the cam object back
         const cam = live.processTallyChange(topic, msg.data.status.value);
         if (cam) {
-          tallyChangeCb(cam);
+          //Broadcast the cam object via the socket server
+          io.emit("tally", cam);
         }
       }
     };
