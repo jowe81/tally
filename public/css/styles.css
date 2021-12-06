@@ -3,6 +3,11 @@ html, body {
   height: 100%;
 }
 
+/* Remove the left border from the first child in each section */
+div:first-child {
+  border-left:none;
+}
+
 /* Contains the dashboard and tallies divs */
 main {
   min-height:100%;
@@ -21,10 +26,6 @@ main {
   justify-content: stretch;
   flex-grow: 2;
   border: 1px solid gray;
-}
-
-div:first-child {
-  border-left:none;
 }
 
 /* Item (box) on the dashboard div */
@@ -58,6 +59,7 @@ div:first-child {
   padding:5px;
   flex-grow:1;
   border-left:1px solid gray;
+  font-size:180%;
   
   /* Center text inside the box */
   display: flex;
@@ -65,10 +67,12 @@ div:first-child {
   align-items: center;
 }
 
+/* Applied to tallies on air*/
 .program {
   background-color:red;
 }
 
+/* Applied to tallies on preview */
 .preview {
   background-color:green;
 }

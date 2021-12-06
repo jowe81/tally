@@ -50,11 +50,11 @@ const initUI = (camData) => {
 
 //Update status bar
 socket.on("connect", () => {
-  $("#connection").html("online");
+  $("#connection").html("Online");
 });
 
 socket.on("disconnect", () => {
-  $("#connection").html("offline");
+  $("#connection").html("Offline");
 });
 
 //After connecting, server sends a snapshot of all camera data
