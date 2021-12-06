@@ -1,10 +1,10 @@
 const constants = {
   
   //Port for Express
-  "PORT": 32800,
+  "PORT": 32801,
 
   //Broker address with protocol (mqtt://...)
-  "MQTT_SERVER": "mqtt://192.168.1.153",
+  "MQTT_SERVER": "mqtt://192.168.1.194",
  
   //Subscribe to...
   "TOPIC": "mpct/update/#",
@@ -89,8 +89,8 @@ const constants = {
       tallies: [ { deviceNo: 15 } ],
     },
     {      
-      name: 1,               
-      description: "tight follow",
+      name: 7,               
+      description: "extra",
       tallies: [
         { deviceNo: 16,
           type: "PGM" },
@@ -98,17 +98,6 @@ const constants = {
           type: "PVW"},
       ]
     },
-    {      
-      name: 1,               
-      description: "tight follow",
-      tallies: [
-        { deviceNo: 18,
-          type: "PGM" },
-        { deviceNo: 19,
-          type: "PVW"},
-      ]
-    },
-
   ]
  
 }
