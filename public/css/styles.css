@@ -91,6 +91,7 @@ main {
 /* Item (box) on the statusbar div */
 .sb-item {
   background-color: black;
+  color:gray;
   padding:5px;
   text-align: center;
   flex-grow:1;
