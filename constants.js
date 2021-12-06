@@ -55,8 +55,8 @@ const constants = {
       name: 5,               
       description: "Handheld",
       tallies: [
-        { deviceNo: 9 },
-        { deviceNo: 10,
+        { deviceNo: 8 },
+        { deviceNo: 9,
           type: "PVW"},
       ]
     },
@@ -64,8 +64,8 @@ const constants = {
       name: 6,               
       description: "POV",
       tallies: [
-        { deviceNo: 11 },
-        { deviceNo: 12,
+        { deviceNo: 10 },
+        { deviceNo: 11,
           type: "PVW"},
       ]
     },
@@ -73,20 +73,40 @@ const constants = {
       name: "PrP Broadcast",             
       description: "",
       tallies: [
-        { deviceNo: 13 },
-        { deviceNo: 14,
+        { deviceNo: 12 },
+        { deviceNo: 13,
           type: "PVW"},
       ]
     },
     {      
       name: "PrP Main",               
       description: "",
-      tallies: [ { deviceNo: 15 } ],
+      tallies: [ { deviceNo: 14 } ],
     },
     {      
       name: "PrP Keyed",               
       description: "",
-      tallies: [ { deviceNo: 16 } ],
+      tallies: [ { deviceNo: 15 } ],
+    },
+    {      
+      name: 1,               
+      description: "tight follow",
+      tallies: [
+        { deviceNo: 16,
+          type: "PGM" },
+        { deviceNo: 17,
+          type: "PVW"},
+      ]
+    },
+    {      
+      name: 1,               
+      description: "tight follow",
+      tallies: [
+        { deviceNo: 18,
+          type: "PGM" },
+        { deviceNo: 19,
+          type: "PVW"},
+      ]
     },
 
   ]
