@@ -11,7 +11,7 @@ main {
   flex-flow: column nowrap;
   justify-content: space-evenly;  
   background-color: black;
-  color:azure;
+  color:azure;  
 }
 
 /* The dashboard div */ 
@@ -19,16 +19,26 @@ main {
   display: flex;
   flex-flow: row nowrap;
   justify-content: stretch;
-  flex-grow: 1;
+  flex-grow: 2;
+  border: 1px solid gray;
+}
+
+div:first-child {
+  border-left:none;
 }
 
 /* Item (box) on the dashboard div */
 .db-item {
-  background-color: gray;
+  background-color: rgb(34, 34, 34);
   padding:5px;
   text-align: center;
   flex-grow:1;
-  border:1px solid azure;  
+  border-left:1px solid gray;  
+
+  /* Center text inside the box */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* The main tallies div */ 
@@ -37,14 +47,17 @@ main {
   flex-flow: row nowrap;
   justify-content: stretch;
   flex-grow: 50;
+  border-left: 1px solid gray;
+  border-right:1px solid gray;  
+  border-bottom:1px solid gray;  
 }
 
 /* Item (box) on the main tallies div */
-.tally-item {  
-  background-color: gray;
+.tl-item {  
+  background-color: rgb(34, 34, 34);
   padding:5px;
   flex-grow:1;
-  border:1px solid azure;
+  border-left:1px solid gray;
   
   /* Center text inside the box */
   display: flex;
@@ -58,4 +71,33 @@ main {
 
 .preview {
   background-color:green;
+}
+
+/* The status bar div */ 
+#statusbar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  flex-grow: 1;
+  border-right:1px solid gray;  
+  border-left:1px solid gray;  
+  border-bottom:1px solid gray;    
+}
+
+/* Item (box) on the statusbar div */
+.sb-item {
+  background-color: black;
+  padding:5px;
+  text-align: center;
+  flex-grow:1;
+  border-left:1px solid rgb(92, 92, 92);  
+
+  /* Center text inside the box */
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.instructions {
+  font-size: 5vw;
 }

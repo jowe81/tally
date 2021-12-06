@@ -6,8 +6,18 @@
   </head>
   <body>
     <main>
-      <div id="dashboard"></div>
-      <div id="tallies"></div>
+      <div id="dashboard" class="dashboard"></div>
+      <div id="tallies">
+      </div>
+      <div id="statusbar">
+        <div id="connection" class="sb-item">offline</div>
+        <div id="clock" class="sb-item">00:00:00</div>
+        <div id="brand" class="sb-item">jowe.ca</div>
+      </div>
+      <!-- This remains hidden - just used for grabbing the instructions when needed -->
+      <div id="instructions" style="display:none">
+        <div class="tl-item instructions">To add a tally, tap on a source above!</div>
+      </div>
     </main>
   </body>  
   <%- include('partials/_scripts') %>

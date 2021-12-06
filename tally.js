@@ -9,6 +9,12 @@ const live = require("./lib/live"); //Data handling module
 // tallyChangeCb(cameraObject) will be called on changes
 const run = (io) => {
 
+  //Send a snapshot of live data to the client 
+  const sendSnapshot = (socket) => {
+    lg(`Sending snapshot to ${socket.handshake.address}`, logPrefix);
+    socket.emit("snapshot", live.getLiveData());
+  };
+
   return new Promise((resolve, reject) => {
 
     //Init the live data module (live.js)
@@ -16,12 +22,16 @@ const run = (io) => {
     const registered = live.init(constants.CAMERAS, constants.TALLY_CONTROLLER_NAME);
     lg(`Registered ${registered.sources} cameras/sources on ${registered.lines} tally lines`, logPrefix);
 
-    //Send snapshot of live data to each new client
-    io.on("connect", (socket) => {
-      socket.emit("snapshot", live.getLiveData());
-    });
+    io.on("connect", (socket) => { 
+      //Send snapshot of live data to each new client
+      sendSnapshot(socket);
 
-    //Interpret incoming message and register tally change
+      //Client requesting a snapshot of live data 
+      socket.on("snapshot", () => sendSnapshot(socket));    
+    });
+    
+
+    //Interpret incoming MQTT message and register tally change
     const messageHandler = (topic, message) => {
       //Attempt JSON parsing
       try {
