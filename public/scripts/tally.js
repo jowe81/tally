@@ -76,7 +76,8 @@ socket.on("tally", (cam) => {
 
 //Listen for clicks/taps on the dashboard, and add selected tally to the main tally board
 $("#dashboard").on('click', (e) => {
-  const sourceID = parseInt(e.target.id.substr(3)); //ID looks like: db_n 
+  //Depending on whether user clicked the div or the label, grab ID from target element or its parent
+  const sourceID = parseInt((e.target.id || $(e.target).parent().attr('id')).substr(3)); //ID looks like: tl_n 
   if (!myTallies.includes(sourceID)) {
     //Selected tally isn't in the array yet - add it on
     myTallies.push(sourceID);
@@ -87,7 +88,8 @@ $("#dashboard").on('click', (e) => {
 
 //Listen for clicks/taps on the main tally board, and remove selected tally
 $("#tallies").on('click', (e) => {
-  const sourceID = parseInt(e.target.id.substr(3)); //ID looks like: tl_n 
+  //Depending on whether user clicked the div or the label, grab ID from target element or its parent
+  const sourceID = parseInt((e.target.id || $(e.target).parent().attr('id')).substr(3)); //ID looks like: tl_n 
   myTallies.splice(myTallies.indexOf(sourceID), 1);
   //After removing a tally, request a full snapshot and to reinit the UI
   socket.emit("snapshot");
