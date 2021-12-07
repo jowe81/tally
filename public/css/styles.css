@@ -74,9 +74,8 @@ main {
 }
 
 .tl_cam-name {
-  padding-bottom: 10vh;
-  color:rgba(255,255,255,.6);
-  font-weight:bolder;
+  padding-bottom: 1vh;
+  color:rgba(255,255,255,.6);  
 }
 
 /* Applied to tallies in dashboard */
