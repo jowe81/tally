@@ -73,9 +73,10 @@ main {
   align-items: flex-end;
 }
 
+/* The label on each tally (main tallies div) */
 .tl_cam-name {
   padding-bottom: 1vh;
-  color:rgba(255,255,255,.6);  
+  color:rgba(255,255,255,.3);  
 }
 
 /* Applied to tallies in dashboard */
