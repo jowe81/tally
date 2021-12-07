@@ -21,10 +21,13 @@ main {
 
 /* The dashboard div */ 
 #dashboard {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: stretch;
+  /* This allows equal width of child boxes independent of content */
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+
   flex-grow: 2;
+
   border: 1px solid gray;
 }
 
@@ -44,10 +47,13 @@ main {
 
 /* The main tallies div */ 
 #tallies {
-  display:flex;
-  flex-flow: row nowrap;
-  justify-content: stretch;
+  /* This allows equal width of child boxes independent of content */
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+
   flex-grow: 50;
+  
   border-left: 1px solid gray;
   border-right:1px solid gray;  
   border-bottom:1px solid gray;  
@@ -64,18 +70,40 @@ main {
   /* Center text inside the box */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
 }
 
-/* Applied to tallies on air*/
-.program {
+.tl_cam-name {
+  padding-bottom: 10vh;
+  color:rgba(255,255,255,.6);
+  font-weight:bolder;
+}
+
+/* Applied to tallies in dashboard */
+.db_program {
   background-color:red;
 }
 
-/* Applied to tallies on preview */
-.preview {
+.db_preview {
   background-color:green;
 }
+
+/* Applied to tallies in main section */
+.tl_program {
+  background: red url('../images/on-air.png') no-repeat center center;
+  background-size: contain;
+}
+
+.tl_preview {
+  background: green url('../images/ready.png') no-repeat center center;
+  background-size: contain;
+}  
+
+.tl_ {
+  background: url('../images/off-air.png') no-repeat center center;
+  background-size: contain;
+}  
+
 
 /* The status bar div */ 
 #statusbar {
@@ -105,4 +133,5 @@ main {
 
 .instructions {
   font-size: 5vw;
+  padding-bottom: 30vh;
 }
