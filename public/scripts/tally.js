@@ -47,7 +47,7 @@ const paintTallyChange = (cam) => {
   //Tallies in the dashboard
 
   //-- Remove all classes first
-  $(`#db_${cam.id}`).removeClass(['db_program','db_preview','db_selected_program','db_selected_preview']);
+  $(`#db_${cam.id}`).removeClass(['db_program','db_preview','db_selected_program','db_selected_preview','db_','db_selected_']);
     
   //-- Apply tallyType class depending on whether or not this source is selected
   if (tallyType) {
@@ -65,7 +65,7 @@ const paintTallyChange = (cam) => {
   }
 
   //Tallies in the main section
-  $(`#tl_${cam.id}`).removeClass(['tl_program','tl_preview']).addClass(`tl_${tallyType}`);  
+  $(`#tl_${cam.id}`).removeClass(['tl_program','tl_preview','tl_']).addClass(`tl_${tallyType}`);  
 
 }
 
