@@ -6,10 +6,12 @@ const constants = {
   //Broker address with protocol (mqtt://...)
   "MQTT_BROKER": "mqtt://192.168.1.194",
  
-  //Subscribe to...
+  "MQTT_NAMESPACE": "mpct/", //Namespace of the MPCT system
+
+  //Subscribe to... (below the namespace)
   "MQTT_TOPICS": {
-    DEVICE_UPDATES: "mpct/update/#",            //Device updates
-    REFERENCE_TIME: "mpct/command/controllers", //Reference time from MPCT server
+    DEVICE_UPDATES: "update/#",            //Device updates
+    REFERENCE_TIME: "command/controllers", //Reference time from MPCT server
   },
  
   //Name of MPCT controller that generates the Tally messages

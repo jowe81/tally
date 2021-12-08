@@ -29,6 +29,10 @@ const run = (io) => {
     lg(`Registered ${registered.sources} cameras/sources on ${registered.lines} tally lines`, logPrefix);
 
     io.on("connect", (socket) => { 
+      //Prompt MPCT server to re-broadcast time when new client connects
+      lg(`Requesting reference time from MPCT`, logPrefix);
+      mqttClient.publish(constants.MQTT_NAMESPACE + "command/server",JSON.stringify({data: "getTime"}));
+
       //Send snapshot of live data to each new client
       sendSnapshot(socket);
 
@@ -44,7 +48,7 @@ const run = (io) => {
       } catch (e) {
         lg(`Error: couldn't JSON.parse incoming message: ${message}`, logPrefix);
       }
-      if (compareTopics(constants.MQTT_TOPICS.DEVICE_UPDATES, topic)) {
+      if (compareTopics(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.DEVICE_UPDATES, topic)) {
         //Device/Tally update: Validate message and process change
         //Message should look like this:
         //  {"data":{"status":{"value":false,"raw":1,"readMode":"interrupt","readAt":1638574812001}},"error":false}
@@ -56,7 +60,7 @@ const run = (io) => {
             io.emit("tally", cam);
           }
         }
-      } else if (compareTopics(constants.MQTT_TOPICS.REFERENCE_TIME, topic)) {
+      } else if (compareTopics(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.REFERENCE_TIME, topic)) {
         lg(`Broadcasting reference time`, logPrefix);
         //Time reference - forward to socket clients
         io.emit("reftime", msg);
@@ -65,8 +69,10 @@ const run = (io) => {
 
     //Connect to broker and start to listen to MQTT messages
     mqttClient.connect(
-      constants.MQTT_BROKER, 
-      [ constants.MQTT_TOPICS.DEVICE_UPDATES, constants.MQTT_TOPICS.REFERENCE_TIME ],
+      constants.MQTT_BROKER, [
+        constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.DEVICE_UPDATES,
+        constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.REFERENCE_TIME, 
+      ],
       messageHandler).then(resolve);
   });
 

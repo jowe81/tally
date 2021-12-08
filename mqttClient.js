@@ -5,13 +5,15 @@ const mqtt = require("mqtt");
 const { lg } = require("@jowe81/lg");
 const logPrefix = "mqtt";
 
+let client = undefined;
+
 //Connect to broker server, subscribe to topic topic
 const connect = (server, topic, messageHandler) => {
 
   return new Promise ((resolve, reject) => {
     lg(`Attempting to connect to ${server}...`, logPrefix);
-    const client = mqtt.connect(server);
-  
+    client = mqtt.connect(server);
+
     client.on('connect', () => {
       lg(`Connected to ${server}!`, logPrefix);  
   
@@ -34,4 +36,14 @@ const connect = (server, topic, messageHandler) => {
 
 }
 
-module.exports = { connect };
+//Send message to broker
+const publish = (topic, data) => {
+  if (client !== undefined) {
+    client.publish(topic, data);
+  }
+}
+
+module.exports = { 
+  connect, 
+  publish
+};
