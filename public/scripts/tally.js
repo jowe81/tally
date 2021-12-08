@@ -75,6 +75,13 @@ socket.on("tally", (cam) => {
   paintTallyChange(cam);
 });
 
+//Listen for reference time updates
+socket.on("reftime", (data) => {
+  if (data.data.setTime && data.data.setTime) {
+    clock.updateOffset(data.data.setTime.ts);
+  }
+});
+
 //Add/remove tally from tally board
 const toggleTally = (sourceID) => {
   if (!isNaN(sourceID)) {
@@ -92,3 +99,5 @@ $("#dashboard, #tallies").on('click', (e) => {
   toggleTally(sourceID);
 });
 
+//Initialize clock
+const clock = referenceClock("#reftime");

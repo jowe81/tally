@@ -10,15 +10,23 @@
       <div id="tallies">
       </div>
       <div id="statusbar">
-        <div id="connection" class="sb-item">...</div>
-        
+        <div class="sb-item">
+          <div class="sb-label">Status:</div>
+          <div class="sb-text" id="connection">...</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-label">Clock:</div>
+          <div class="sb-text" id="reftime"></div>
+        </div>
         <div id="brand" class="sb-item">
           Tally is a&nbsp;<a href="http://jowe.ca" target="_blank">jowe.ca</a>&nbsp;service!
         </div>
       </div>
       <!-- This remains hidden - just used for grabbing the instructions when needed -->
       <div id="instructions" style="display:none">
-        <div class="tl-item instructions">To add or remove tallies,<br>tap on the sources above!</div>
+        <div class="tl-item instructions">
+          To add or remove tallies,<br>tap on the sources above!
+        </div>
       </div>
     </main>
   </body>  

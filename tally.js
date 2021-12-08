@@ -15,6 +15,12 @@ const run = (io) => {
     socket.emit("snapshot", live.getLiveData());
   };
 
+  //Check if the topic in a received message has resulted from the subscripion to topicFromConstants
+  const compareTopics = (topicFromConstants, topicFromBroker) => {
+    const compareStr = topicFromConstants.substr(0,topicFromConstants.length - 1);
+    return topicFromBroker.substr(0,compareStr.length) === compareStr;
+  };
+
   return new Promise((resolve, reject) => {
 
     //Init the live data module (live.js)
@@ -28,32 +34,40 @@ const run = (io) => {
 
       //Client requesting a snapshot of live data 
       socket.on("snapshot", () => sendSnapshot(socket));    
-    });
-    
+    });    
 
     //Interpret incoming MQTT message and register tally change
-    const messageHandler = (topic, message) => {
+    const messageHandler = (topic, message) => {      
       //Attempt JSON parsing
       try {
         msg = JSON.parse(message.toString());
       } catch (e) {
         lg(`Error: couldn't JSON.parse incoming message: ${message}`, logPrefix);
       }
-      //Validate message and process change
-      //Message should look like this:
-      //  {"data":{"status":{"value":false,"raw":1,"readMode":"interrupt","readAt":1638574812001}},"error":false}
-      if (msg && msg.data && msg.data.status) {
-        //If an actual change was registered, we'll get the cam object back
-        const cam = live.processTallyChange(topic, msg.data.status.value);
-        if (cam) {
-          //Broadcast the cam object via the socket server
-          io.emit("tally", cam);
+      if (compareTopics(constants.MQTT_TOPICS.DEVICE_UPDATES, topic)) {
+        //Device/Tally update: Validate message and process change
+        //Message should look like this:
+        //  {"data":{"status":{"value":false,"raw":1,"readMode":"interrupt","readAt":1638574812001}},"error":false}
+        if (msg && msg.data && msg.data.status) {
+          //If an actual change was registered, we'll get the cam object back
+          const cam = live.processTallyChange(topic, msg.data.status.value);
+          if (cam) {
+            //Broadcast the cam object via the socket server
+            io.emit("tally", cam);
+          }
         }
+      } else if (compareTopics(constants.MQTT_TOPICS.REFERENCE_TIME, topic)) {
+        lg(`Broadcasting reference time`, logPrefix);
+        //Time reference - forward to socket clients
+        io.emit("reftime", msg);
       }
     };
 
     //Connect to broker and start to listen to MQTT messages
-    mqttClient.connect(constants.MQTT_SERVER, constants.TOPIC, messageHandler).then(resolve);
+    mqttClient.connect(
+      constants.MQTT_BROKER, 
+      [ constants.MQTT_TOPICS.DEVICE_UPDATES, constants.MQTT_TOPICS.REFERENCE_TIME ],
+      messageHandler).then(resolve);
   });
 
 };

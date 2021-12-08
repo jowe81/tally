@@ -54,6 +54,8 @@ main {
   border-left: 1px solid gray;
   border-right:1px solid gray;  
   border-bottom:1px solid gray;  
+
+  background-color: rgb(34, 34, 34);
 }
 
 /* Item (box) on the main tallies div */
@@ -107,7 +109,7 @@ main {
 #statusbar {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 1fr 4fr;  
+  grid-auto-columns: 1.2fr 1.4fr 4fr;  
   border-right:1px solid gray;  
   border-left:1px solid gray;  
   border-bottom:1px solid gray;    
@@ -117,20 +119,37 @@ main {
 .sb-item {
   background-color: black;
   color:gray;
-  padding:5px;
+  
   text-align: center;
   flex-grow:1;
   border-left:1px solid rgb(92, 92, 92);  
 
+  
   /* Center text inside the box */
   display: flex;
   justify-content: center;
   align-items: center; 
 }
 
+.sb-label {
+  position:relative;
+  font-size:10px;
+  z-index:3;
+  top:-12px;
+  left:2px;
+  width:100%;
+  text-align:left;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.2);
+}
+
+.sb-text {
+  position:absolute;
+}
+
 .instructions {
   font-size: 5vw;
-  padding-bottom: 30vh;
   text-align: center;
   color:rgba(255,255,255,.5);
+  align-self: center;
 }

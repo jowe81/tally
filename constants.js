@@ -4,10 +4,13 @@ const constants = {
   "PORT": 32801,
 
   //Broker address with protocol (mqtt://...)
-  "MQTT_SERVER": "mqtt://192.168.1.194",
+  "MQTT_BROKER": "mqtt://192.168.1.194",
  
   //Subscribe to...
-  "TOPIC": "mpct/update/#",
+  "MQTT_TOPICS": {
+    DEVICE_UPDATES: "mpct/update/#",            //Device updates
+    REFERENCE_TIME: "mpct/command/controllers", //Reference time from MPCT server
+  },
  
   //Name of MPCT controller that generates the Tally messages
   "TALLY_CONTROLLER_NAME": "Tally", 
