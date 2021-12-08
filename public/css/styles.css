@@ -32,6 +32,7 @@ main {
 
 /* Item (box) on the dashboard div */
 .db-item {
+  color:rgba(255, 255, 255, 0.527);
   background-color: rgb(34, 34, 34);
   padding:5px;
   text-align: center;
@@ -42,6 +43,10 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.db-item-active {
+  color: white;  
 }
 
 /* The main tallies div */ 
@@ -80,27 +85,56 @@ main {
 }
 
 /* Applied to tallies in dashboard */
-.db_program {
-  background-color:red;
+
+:root {
+  /* Set color variables so we can apply alpha values to them below */
+  --red: 255, 0, 0;
+  --green: 0, 150, 30;
+  --gray: 110, 110, 110;
 }
 
+/* -- PGM for unselected sources in db */
+.db_program {
+  background-color:rgba(var(--red),.5);
+}
+
+/* -- PVW for unselected sources in db */
 .db_preview {
-  background-color:green;
+  background-color:rgba(var(--green),.5);
+}
+
+/* -- PGM for selected sources in db */
+.db_selected_program {
+  background-color: rgba(var(--red),1);
+}
+
+/* -- PVW for selected sources in db */
+.db_selected_preview {
+  background-color: rgba(var(--green),1);
+}
+
+/* -- OFF AIR for selected sources in db */
+.db_selected_ {
+  background-color: rgba(var(--gray),1);
 }
 
 /* Applied to tallies in main section */
+
+/* -- PGM */
 .tl_program {
-  background: red url('../images/on-air.png') no-repeat center center;
+  background: rgba(var(--red),1) url('../images/on-air.png') no-repeat center center;
   background-size: contain;
 }
 
+/* -- PVW */
 .tl_preview {
-  background: green url('../images/ready.png') no-repeat center center;
+  background: rgba(var(--green),1) url('../images/ready.png') no-repeat center center;
   background-size: contain;
 }  
 
+/* -- Offline */
 .tl_ {
-  background: url('../images/off-air.png') no-repeat center center;
+  background: rgba(var(--gray),.3) url('../images/off-air.png') no-repeat center center;
   background-size: contain;
 }  
 

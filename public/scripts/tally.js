@@ -29,7 +29,24 @@ const paintTallyChange = (cam) => {
   const tallyType = getTallyType(cam);
 
   //Tallies in the dashboard
-  $(`#db_${cam.id}`).removeClass(['db_program','db_preview']).addClass(`db_${tallyType}`);
+
+  //-- Remove all classes first
+  $(`#db_${cam.id}`).removeClass(['db_program','db_preview','db_selected_program','db_selected_preview']);
+    
+  //-- Apply tallyType class depending on whether or not this source is selected
+  if (tallyType) {
+    //Preview or program
+    if (myTallies.includes(cam.id)) {
+      $(`#db_${cam.id}`).addClass(`db_selected_${tallyType}`);
+    } else {
+      $(`#db_${cam.id}`).addClass(`db_${tallyType}`);
+    }      
+  } else {
+    //Off air
+    if (myTallies.includes(cam.id)) {
+      $(`#db_${cam.id}`).addClass(`db_selected_`);
+    }
+  }
 
   //Tallies in the main section
   $(`#tl_${cam.id}`).removeClass(['tl_program','tl_preview']).addClass(`tl_${tallyType}`);  
@@ -48,8 +65,9 @@ const initUI = (camData) => {
     //Show all sources in the dashboard
     $("#dashboard").append(`<div id="db_${cam.id}" class="db-item"><div class="">${cam.name}<div></div>`);
     //Show only myTallies in main tally area
-    if (myTallies.includes(cam.id)){
+    if (myTallies.includes(cam.id)){      
       $("#tallies").append(`<div id="tl_${cam.id}" class="tl-item"><div class="tl_cam-name">${camLabel}<div></div>`);
+      $(`#db_${cam.id}`).addClass('db-item-active');
     }
     //Init the data
     paintTallyChange(cam);
