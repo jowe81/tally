@@ -12,22 +12,21 @@ div:first-child {
 main {
   min-height:100%;
   height:100%;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-evenly;  
+
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-rows: 10fr 80fr 40px;
+  
   background-color: black;
   color:azure;  
 }
 
 /* The dashboard div */ 
 #dashboard {
-  /* This allows equal width of child boxes independent of content */
+  /* Grid allows equal width of child boxes independent of content */
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-
-  flex-grow: 2;
-
   border: 1px solid gray;
 }
 
@@ -47,13 +46,11 @@ main {
 
 /* The main tallies div */ 
 #tallies {
-  /* This allows equal width of child boxes independent of content */
+  /* Grid allows equal width of child boxes independent of content */
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
 
-  flex-grow: 50;
-  
   border-left: 1px solid gray;
   border-right:1px solid gray;  
   border-bottom:1px solid gray;  
@@ -76,7 +73,8 @@ main {
 /* The label on each tally (main tallies div) */
 .tl_cam-name {
   padding-bottom: 1vh;
-  color:rgba(255,255,255,.3);  
+  color:rgba(255,255,255,.3);
+  text-align: center;
 }
 
 /* Applied to tallies in dashboard */
@@ -107,10 +105,9 @@ main {
 
 /* The status bar div */ 
 #statusbar {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: stretch;
-  flex-grow: 1;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr 4fr;  
   border-right:1px solid gray;  
   border-left:1px solid gray;  
   border-bottom:1px solid gray;    
@@ -134,4 +131,6 @@ main {
 .instructions {
   font-size: 5vw;
   padding-bottom: 30vh;
+  text-align: center;
+  color:rgba(255,255,255,.5);
 }

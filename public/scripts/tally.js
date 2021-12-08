@@ -17,11 +17,9 @@ const getTallyType = (cam) => {
 
 //With no tallies selected, show instructions
 const showInstructions = (show) => {
-  console.log(show);
   if (show) {
     $("#tallies").html($("#instructions").html());
-  }
-  
+  }  
 }
 
 //Paint tally data
@@ -77,23 +75,20 @@ socket.on("tally", (cam) => {
   paintTallyChange(cam);
 });
 
-//Listen for clicks/taps on the dashboard, and add selected tally to the main tally board
-$("#dashboard").on('click', (e) => {
+//Add/remove tally from tally board
+const toggleTally = (sourceID) => {
+  if (!isNaN(sourceID)) {
+    myTallies.includes(sourceID) ? myTallies.splice(myTallies.indexOf(sourceID), 1) : myTallies.push(sourceID);
+    //After changing the tallies, request a full snapshot and to reinit the UI
+    socket.emit("snapshot");  
+  }
+}
+
+//Listen for clicks/taps on the dashboard and tally section,
+// and add/remove selected source from the tally board
+$("#dashboard, #tallies").on('click', (e) => {
   //Depending on whether user clicked the div or the label, grab ID from target element or its parent
   const sourceID = parseInt((e.target.id || $(e.target).parent().attr('id')).substr(3)); //ID looks like: tl_n 
-  if (!myTallies.includes(sourceID)) {
-    //Selected tally isn't in the array yet - add it on
-    myTallies.push(sourceID);
-    //After adding a tally, request a full snapshot and to reinit the UI
-    socket.emit("snapshot");
-  }
+  toggleTally(sourceID);
 });
 
-//Listen for clicks/taps on the main tally board, and remove selected tally
-$("#tallies").on('click', (e) => {
-  //Depending on whether user clicked the div or the label, grab ID from target element or its parent
-  const sourceID = parseInt((e.target.id || $(e.target).parent().attr('id')).substr(3)); //ID looks like: tl_n 
-  myTallies.splice(myTallies.indexOf(sourceID), 1);
-  //After removing a tally, request a full snapshot and to reinit the UI
-  socket.emit("snapshot");
-});
