@@ -10,16 +10,24 @@
       <div id="tallies">
       </div>
       <div id="statusbar">
-        <div class="sb-item">
+        <!-- Timer is hidden by default -->
+        <div id="timer" class="sb-item" style="display:none">
+          <div class="sb-label">Timer:</div>          
+          <div class="sb-text" id="remaining">00:00</div>
+        </div>
+        <!-- Status will show when timer is not active -->
+        <div id="status" class="sb-item">
           <div class="sb-label">Status:</div>
           <div class="sb-text" id="connection">...</div>
         </div>
+        <!-- Clock (always shows)-->
         <div class="sb-item">
           <div class="sb-label">Clock:</div>
           <div class="sb-text" id="reftime"></div>
         </div>
+        <!-- Brand (always shows)-->
         <div id="brand" class="sb-item">
-          Tally is a&nbsp;<a href="http://jowe.ca" target="_blank">jowe.ca</a>&nbsp;service!
+          Tally is a&nbsp;<a href="http://jowe.ca" target="_blank">jowe.ca</a>&nbsp;service!          
         </div>
       </div>
       <!-- This remains hidden - just used for grabbing the instructions when needed -->

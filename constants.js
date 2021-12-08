@@ -17,6 +17,14 @@ const constants = {
   //Name of MPCT controller that generates the Tally messages
   "TALLY_CONTROLLER_NAME": "Tally", 
 
+  //Default MPCT timer (the timer to listen to for timer information) 
+  "DEFAULT_TIMER": "ESPA0.clockTimer",
+
+  //Minimum remaining seconds for timer to show in these colors
+  "TIMER_GREEN": 120,
+  "TIMER_ORANGE": 60,
+  "TIMER_RED": 10,
+
   //Information for cameras to be listened for/reported
   "CAMERAS": [
     {      

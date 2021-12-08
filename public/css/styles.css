@@ -187,3 +187,24 @@ main {
   color:rgba(255,255,255,.5);
   align-self: center;
 }
+
+
+/* Timer */
+.hidden {
+  display:none;
+}
+
+.timer-green {
+  color:lime;
+  background-color:rgba(var(--green),.2);  
+}
+
+.timer-orange {
+  color:orange;
+  background-color:rgb(77, 42, 0);
+}
+
+.timer-red {
+  color:red;
+  background-color: rgba(var(--red),.2);
+}

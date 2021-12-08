@@ -3,7 +3,15 @@ const logPrefix = "tally";
 
 const constants = require("./constants");
 const mqttClient = require("./mqttClient");
-const live = require("./lib/live"); //Data handling module
+
+//Mdule to handle live data
+const live = require("./lib/live");
+
+//Module to handle MQTT messages
+const mqttMessageHandlers = require("./lib/mqttMessageHandlers"); 
+mqttMessageHandlers.init(live); //Needs the live reference
+
+
 
 //Gets called from server.js
 // tallyChangeCb(cameraObject) will be called on changes
@@ -20,6 +28,20 @@ const run = (io) => {
     const compareStr = topicFromConstants.substr(0,topicFromConstants.length - 1);
     return topicFromBroker.substr(0,compareStr.length) === compareStr;
   };
+
+  //Extract the device name from the topic by returning the last part: mpct/update/DEVICE_NAME
+  const getDeviceNameFromTopic = (topic) => {
+    const mqttPath = topic.split('/');
+    return mqttPath[mqttPath.length - 1];
+  };
+
+  //Check if this is a tally by comparing controller name and device ID on the controller
+  const deviceNameIsTally = (deviceName) => {
+    const deviceShortName = deviceName.split('.')[0]; //Tally0.switch -> Tally0
+    const deviceNo = parseInt(deviceShortName.substr(constants.TALLY_CONTROLLER_NAME.length));    
+    return live.deviceNoIsTallyLine(deviceNo);
+  }
+  
 
   return new Promise((resolve, reject) => {
 
@@ -49,21 +71,16 @@ const run = (io) => {
         lg(`Error: couldn't JSON.parse incoming message: ${message}`, logPrefix);
       }
       if (compareTopics(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.DEVICE_UPDATES, topic)) {
-        //Device/Tally update: Validate message and process change
-        //Message should look like this:
-        //  {"data":{"status":{"value":false,"raw":1,"readMode":"interrupt","readAt":1638574812001}},"error":false}
-        if (msg && msg.data && msg.data.status) {
-          //If an actual change was registered, we'll get the cam object back
-          const cam = live.processTallyChange(topic, msg.data.status.value);
-          if (cam) {
-            //Broadcast the cam object via the socket server
-            io.emit("tally", cam);
-          }
+        //topic is /mpct/update
+        const updatedDeviceName = getDeviceNameFromTopic(topic);
+        if (updatedDeviceName === constants.DEFAULT_TIMER) {
+          mqttMessageHandlers.handleTimerUpdate(io, topic, msg);
+        } else if (deviceNameIsTally(updatedDeviceName)) {
+          mqttMessageHandlers.handleTallyUpdate(io, topic, msg);
         }
       } else if (compareTopics(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.REFERENCE_TIME, topic)) {
-        lg(`Broadcasting reference time`, logPrefix);
-        //Time reference - forward to socket clients
-        io.emit("reftime", msg);
+        //topic is command/controllers
+        mqttMessageHandlers.handleRefTimeUpdate(io, topic, msg);
       }
     };
 

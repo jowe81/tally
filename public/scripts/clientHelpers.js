@@ -24,3 +24,16 @@ const getMyTallies = () => {
   }
   return [];
 }
+
+//Return 00:00 from remaining seconds
+const getRemainingTimeStr = (remaining) => {
+  let minus = "";
+  if (remaining < 0) {
+    minus = "-";
+    remaining = -remaining;
+  }
+  const twoDigits = (n) => n < 10 ? `0${n}` : n;
+  const s = twoDigits(remaining % 60);
+  const m = Math.floor(remaining / 60);
+  return `${minus}${m}:${s}`;
+};

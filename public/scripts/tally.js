@@ -22,6 +22,22 @@ const showInstructions = (show) => {
   }  
 }
 
+//Show or hide timer (and show/hide connection status accordingly)
+const showTimer = (show, remaining, color) => {
+  console.log("show timer", show);
+  if (show) {
+    let timerClass = `timer-${color}`;
+    const remainingTimeStr = getRemainingTimeStr(remaining);
+    $("#status").hide();
+    $("#timer .sb-text").html(remainingTimeStr);
+    $("#timer").removeClass(["timer-green", "timer-orange", "timer-red"]).addClass(timerClass).show();
+  } else {
+    $("#status").show();
+    $("#timer .sb-text").html('');
+    $("#timer").hide();
+  }
+}
+
 //Paint tally data
 const paintTallyChange = (cam) => {
 
@@ -81,6 +97,7 @@ socket.on("connect", () => {
 
 socket.on("disconnect", () => {
   $("#connection").html("Offline");
+  showTimer(false); //Make sure status bar shows, in case timer was up before
 });
 
 //After connecting, server sends a snapshot of all camera data
@@ -99,6 +116,13 @@ socket.on("reftime", (data) => {
     clock.updateOffset(data.data.setTime.ts);
   }
 });
+
+socket.on("timer", (data) => {
+  if (data && data.data && data.data.remaining !== undefined) {
+    //Show or hide timer based on whether remaining time === false (or a number)
+    showTimer(data.data.remaining === false ? false : true, data.data.remaining, data.data.color);
+  } 
+})
 
 //Add/remove tally from tally board
 const toggleTally = (sourceID) => {
