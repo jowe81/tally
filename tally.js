@@ -78,7 +78,7 @@ const run = (io) => {
         } else if (deviceNameIsTally(updatedDeviceName)) {
           mqttMessageHandlers.handleTallyUpdate(io, topic, msg);
         }
-      } else if (compareTopics(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.REFERENCE_TIME, topic)) {
+      } else if (compareTopics(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.COMMANDS, topic)) {
         //topic is command/controllers
         mqttMessageHandlers.handleRefTimeUpdate(io, topic, msg);
       }
@@ -88,9 +88,14 @@ const run = (io) => {
     mqttClient.connect(
       constants.MQTT_BROKER, [
         constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.DEVICE_UPDATES,
-        constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.REFERENCE_TIME, 
+        constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.COMMANDS, 
       ],
-      messageHandler).then(resolve);
+      messageHandler).then(() => {
+        resolve();
+        //Ask controllers to send full updates (to poll tally data from tally mpct controller)
+        lg(`Requesting full update from controllers`,logPrefix);
+        mqttClient.publish(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.COMMANDS, `{"data":{"publishFullStatus":{"forceHardwareRead":false}}}`);
+      });
   });
 
 };

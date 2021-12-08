@@ -11,7 +11,7 @@ const constants = {
   //Subscribe to... (below the namespace)
   "MQTT_TOPICS": {
     DEVICE_UPDATES: "update/#",            //Device updates
-    REFERENCE_TIME: "command/controllers", //Reference time from MPCT server
+    COMMANDS:       "command/controllers", //Reference time from MPCT server, status updates from controllers...
   },
  
   //Name of MPCT controller that generates the Tally messages
