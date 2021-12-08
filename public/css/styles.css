@@ -88,7 +88,7 @@ main {
 
 :root {
   /* Set color variables so we can apply alpha values to them below */
-  --red: 255, 0, 0;
+  --red: 225, 0, 0;
   --green: 0, 150, 30;
   --gray: 110, 110, 110;
 }
