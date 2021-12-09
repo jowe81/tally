@@ -23,14 +23,11 @@ const showInstructions = (show) => {
 }
 
 //Show or hide timer (and show/hide connection status accordingly)
-const showTimer = (show, remaining, color) => {
-  console.log("show timer", show);
-  if (show) {
-    let timerClass = `timer-${color}`;
-    const remainingTimeStr = getRemainingTimeStr(remaining);
+const showTimer = (remaining, colorClass) => {
+  if (remaining !== false) {
     $("#status").hide();
-    $("#timer .sb-text").html(remainingTimeStr);
-    $("#timer").removeClass(["timer-green", "timer-orange", "timer-red"]).addClass(timerClass).show();
+    $("#timer .sb-text").html(getRemainingTimeStr(remaining));
+    $("#timer").removeClass(["timer-green", "timer-orange", "timer-red"]).addClass(colorClass).show();
   } else {
     $("#status").show();
     $("#timer .sb-text").html('');
@@ -117,10 +114,18 @@ socket.on("reftime", (data) => {
   }
 });
 
+//Listen for timer updates
 socket.on("timer", (data) => {
   if (data && data.data && data.data.remaining !== undefined) {
+    //Determine color: 1 indicator (ind:1) -> orange
+    let colorClass = "timer-red";
+    if (data.data.ind > 1) {
+      colorClass = "timer-green";
+    } else if (data.data.ind === 1) {
+      colorClass = "timer-orange";
+    }
     //Show or hide timer based on whether remaining time === false (or a number)
-    showTimer(data.data.remaining === false ? false : true, data.data.remaining, data.data.color);
+    showTimer(data.data.remaining, colorClass);
   } 
 })
 
