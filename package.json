@@ -1,10 +1,10 @@
 {
   "name": "tally",
   "version": "1.0.0",
-  "description": "",
-  "main": "constants.js",
+  "description": "Tally Server for MPCT",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./test/tallyTest.js"
   },
   "repository": {
     "type": "git",
@@ -13,7 +13,8 @@
   "keywords": [
     "tally",
     "Ross",
-    "Carbonite"
+    "Carbonite",
+    "MPCT",
   ],
   "author": "Johannes Weber (jowe.ca)",
   "license": "ISC",
