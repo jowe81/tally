@@ -71,20 +71,22 @@ const run = (io) => {
         lg(`Error: couldn't JSON.parse incoming message: ${message}`, logPrefix);
       }
       if (compareTopics(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.DEVICE_UPDATES, topic)) {
-        //topic is /mpct/update
+        //topic is mpct/update
         const updatedDeviceName = getDeviceNameFromTopic(topic);
         if (updatedDeviceName === constants.DEFAULT_TIMER) {
+          //Received an update from a timer set on the master timer
           mqttMessageHandlers.handleTimerUpdate(io, topic, msg);
         } else if (deviceNameIsTally(updatedDeviceName)) {
+          //Received an update from a tally line
           mqttMessageHandlers.handleTallyUpdate(io, topic, msg);
         }
       } else if (compareTopics(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.COMMANDS, topic)) {
-        //topic is command/controllers
+        //topic is mpct/command/controllers
         mqttMessageHandlers.handleRefTimeUpdate(io, topic, msg);
       }
     };
 
-    //Connect to broker and start to listen to MQTT messages
+    //Connect to broker and start to listen to MQTT messages (promise always resolves)
     mqttClient.connect(
       constants.MQTT_BROKER, [
         constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.DEVICE_UPDATES,
@@ -92,10 +94,10 @@ const run = (io) => {
       ],
       messageHandler).then(() => {
         resolve();
-        //Ask controllers to send full updates (to poll tally data from tally mpct controller)
+        //On successful connection, ask controllers to send full updates (to poll tally data from tally mpct controller)
         lg(`Requesting full update from controllers`,logPrefix);
         mqttClient.publish(constants.MQTT_NAMESPACE + constants.MQTT_TOPICS.COMMANDS, `{"data":{"publishFullStatus":{"forceHardwareRead":false}}}`);
-      });
+      });    
   });
 
 };
