@@ -4,8 +4,10 @@ const { lg } = require("@jowe81/lg");
 
 //Make array of test updates
 const ar = [];
-for (let i = 10; i >= -5; i--) {
-  ar.push(`{"data":{"remaining":${i}}}`);
+let j;
+for (let i = 12; i >= -2; i--) {
+  j = Math.max(Math.ceil(i/3), 0);
+  ar.push(`{"data":{"remaining":${i}, "ind":${j}}}`);
 }
 ar.push(`{"data":{"remaining":false}}`);
 ar.push(`{"data":{"remaining":false}}`);
