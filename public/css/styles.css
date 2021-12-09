@@ -188,6 +188,10 @@ main {
   align-self: center;
 }
 
+/* Clock */
+#reftime {
+  color:red;
+}
 
 /* Timer */
 .hidden {
