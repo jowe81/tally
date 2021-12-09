@@ -1,10 +1,10 @@
 const constants = {
   
   //Port for Express
-  "PORT": 32801,
+  "PORT": 80,
 
   //Broker address with protocol (mqtt://...)
-  "MQTT_BROKER": "mqtt://192.168.1.194",
+  "MQTT_BROKER": "mqtt://192.168.7.198",
  
   "MQTT_NAMESPACE": "mpct/", //Namespace of the MPCT system
 
@@ -20,18 +20,13 @@ const constants = {
   //Default MPCT timer (the timer to listen to for timer information) 
   "DEFAULT_TIMER": "ESPA0.clockTimer",
 
-  //Minimum remaining seconds for timer to show in these colors
-  "TIMER_GREEN": 120,
-  "TIMER_ORANGE": 60,
-  "TIMER_RED": 10,
-
   //Information for cameras to be listened for/reported
   "CAMERAS": [
     {      
       name: 1,               
       description: "tight follow",
       tallies: [
-        { deviceNo: 0,
+        { deviceNo: 0,    //deviceNo on MPCT tally controller
           type: "PGM" },
         { deviceNo: 1,
           type: "PVW"},
@@ -100,16 +95,6 @@ const constants = {
       name: "PrP Keyed",               
       description: "",
       tallies: [ { deviceNo: 15 } ],
-    },
-    {      
-      name: 7,               
-      description: "extra",
-      tallies: [
-        { deviceNo: 16,
-          type: "PGM" },
-        { deviceNo: 17,
-          type: "PVW"},
-      ]
     },
   ]
  
