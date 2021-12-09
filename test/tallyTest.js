@@ -73,9 +73,11 @@ mqttClient.connect(constants.MQTT_BROKER,"#",(topic, data) => {
     }));
   }
 
-  //Send a fake system time after a couple seconds
-  setTimeout(() => {
+  //Send a fake system time randomly
+  const sendFakeTime = () => {
     mqttClient.publish(MQTTCommandPath, `{"data":{"setTime":{"hours":"1","minutes":"31","seconds":"49","year":"2021","month":"11","day":"9","ts":"1639013509559"}}}`);
-  }, 5000);
+    setTimeout(sendFakeTime, 10000 + Math.random() * 30000);
+  }
+  setTimeout(sendFakeTime,5000);
 
 })
