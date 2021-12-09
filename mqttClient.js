@@ -32,6 +32,10 @@ const connect = (server, topic, messageHandler) => {
     client.on('message', function (topic, message) {    
         messageHandler(topic, message);
     });    
+
+    client.on('error',(e)=> {
+      lg(`Error: ${e.message}`,logPrefix);
+    });
   });
 
 }
