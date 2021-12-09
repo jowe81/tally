@@ -1,7 +1,12 @@
+//tally.js: Manages MQTT/MPCT interactions and socket clients.
+//- Most of the magich happens here!
+
 const { lg } = require("@jowe81/lg");
 const logPrefix = "tally";
 
 const constants = require("./constants");
+
+//Encapsulation of the MQTT connection
 const mqttClient = require("./mqttClient");
 
 //Mdule to handle live data
@@ -11,10 +16,11 @@ const live = require("./lib/live");
 const mqttMessageHandlers = require("./lib/mqttMessageHandlers"); 
 mqttMessageHandlers.init(live); //Needs the live reference
 
-
-
 //Gets called from server.js
-// tallyChangeCb(cameraObject) will be called on changes
+//- Returns a promise that resolves on successful MQTT connection
+//- Attaches message handlers for MQTT messages
+//- Handles socket clients
+//- Forwards data to socket clients as needed
 const run = (io) => {
 
   //Send a snapshot of live data to the client 
