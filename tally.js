@@ -10,10 +10,10 @@ const constants = require("./constants");
 const mqttClient = require("./mqttClient");
 
 //Mdule to handle live data
-const live = require("./lib/live");
+const live = require("./live");
 
 //Module to handle MQTT messages
-const mqttMessageHandlers = require("./lib/mqttMessageHandlers"); 
+const mqttMessageHandlers = require("./mqttMessageHandlers"); 
 mqttMessageHandlers.init(live); //Needs the live reference
 
 //Gets called from server.js

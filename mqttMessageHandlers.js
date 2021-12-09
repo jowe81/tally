@@ -1,7 +1,7 @@
 //mqttMessageHandlers.js: Handle MPCT / MQTT messages
 
 const { lg } = require("@jowe81/lg");
-const constants = require("../constants");
+const constants = require("./constants");
 const logPrefix = "tally";
 
 let _live; //Reference to live object
