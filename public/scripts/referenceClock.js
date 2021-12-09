@@ -1,4 +1,4 @@
-//referenceClock.js
+//referenceClock.js: returns a clock object managing reference time in a closure
 
 const referenceClock = (elementSelector, updateInterval = 100) => {
 
@@ -39,9 +39,7 @@ const referenceClock = (elementSelector, updateInterval = 100) => {
     }
   }
 
-  //Set offset initially;
-  //updateOffset();
-
+  //Update the HTML element with the clock at updateInterval
   setInterval(updateElementText, updateInterval)
 
   return {
