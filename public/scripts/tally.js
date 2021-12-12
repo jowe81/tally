@@ -71,13 +71,19 @@ const initUI = (camData) => {
   $("#dashboard").empty();
   $("#tallies").empty();
   showInstructions(myTallies.length ? false : true);  
+  //Paint dashboard sources
   for (cam of camData) {
+    //Show all sources in the dashboard
+    $("#dashboard").append(`<div id="db_${cam.id}" class="db-item"><div class="">${cam.name}<div></div>`);
+  }
+  //Paint main tally board sources in the order they have been added to the board
+  for (tallySourceID of myTallies) {
+    //Grab the camera object
+    let cam = camData.filter((camObj) =>  camObj.id === tallySourceID )[0];
     let camLabel = cam.name;
     //Add the word "cam" if name is just a number
     if (parseInt(camLabel) > 0) camLabel = `CAM ${cam.name}`;
-    //Show all sources in the dashboard
-    $("#dashboard").append(`<div id="db_${cam.id}" class="db-item"><div class="">${cam.name}<div></div>`);
-    //Show only myTallies in main tally area
+    //Show myTallies in main tally area
     if (myTallies.includes(cam.id)){      
       $("#tallies").append(`<div id="tl_${cam.id}" class="tl-item"><div class="tl_cam-name">${camLabel}<div></div>`);
       $(`#db_${cam.id}`).addClass('db-item-active');
