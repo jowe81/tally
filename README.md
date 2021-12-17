@@ -22,7 +22,9 @@
 ``` nano constants.js``` (from within the ```tally``` directory)
 
 ## Run it:
-```npm run tally```
+```npm run tally``` (or ```sudo npm run tally```, if you have configured express/the website to be served at port 80)
+
+![Tally in the Terminal](./github/terminal.png)
 
 To actually use Tally, you will need to configure an [MQTT broker](http://mosquitto.org), an [MPCT controller](http://github.com/jowe81/mpctcontroller), and an [MPCT server](http://github.com/jowe81/mpctserver). These need to be properly referenced in [constants.js](./constants.js).
 
