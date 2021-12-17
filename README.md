@@ -36,6 +36,14 @@ The test generates fake tally data, but needs an MQTT broker to work.
 ```npm run test```
 
 ## Dependencies
+
+### Hardware
+For production use you will need a physical interface to bring tally data from your switcher onto the network. You can build this yourself or contact me for assistance.
+
+![Tally Box Closed](./github/tallybox-closed.jpg)
+![Tally Box Open](./github/tallybox-open.jpg)
+
+### Packages
 * [ejs](https://www.npmjs.com/package/ejs): ^3.1.6
 * [express](https://www.npmjs.com/package/express): ^4.17.1
 * [socket.io](https://www.npmjs.com/package/socket.io): ^4.4.0
