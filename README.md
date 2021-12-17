@@ -11,6 +11,28 @@
 ## Watch Demo Video:
 [![Video Demo Thumbnail](./github/yt-thumb-for-github.jpg)](https://www.youtube.com/watch?v=30k-sjt_wY0)
 
+## Install it:
+```git clone http://github.com/jowe81/tally```
+
+```cd tally```
+
+```npm install```
+
+## Configure it:
+``` nano constants.js``` (from within the ```tally``` directory)
+
+## Run it:
+```npm run tally```
+
+To actually use Tally, you will need to configure an [MQTT broker](http://mosquitto.org), an [MPCT controller](http://github.com/jowe81/mpctcontroller), and an [MPCT server](http://github.com/jowe81/mpctserver). These need to be properly referenced in [constants.js](./constants.js).
+
+_Important: This is not trivial to set up, and the MPCT repos at this time do not include any instructions for setup. If you really want to try this out, please contact me at johannes@jowe.ca and I'll assist you._ 
+
+## Run the test file:
+The test generates fake tally data, but needs an MQTT broker to work.
+
+```npm run test```
+
 ## Dependencies
 * [ejs](https://www.npmjs.com/package/ejs): ^3.1.6
 * [express](https://www.npmjs.com/package/express): ^4.17.1
