@@ -24,3 +24,6 @@
   * Selected tallies will now show up in the order they were added to the tallyboard (sources will be added to the right of the board instead of inserted by camera id)
 * Version 1.0.0 (December 9, 2021)
   * Initial release
+
+## About
+I work as a technical director at [Tenth Church](http://www.tenth.ca) in Vancouver, Canada. We recently installed a broadcast video system. Some of our camera operators have expressed that a tally light would be helpful, and instead of trying to get funding for a commercial solution I decided to build one. The entire cost of the hardware for this was well below 100$ CDN, and one doesn't need to be an electronics geek to build this - just some soldering skills required.
