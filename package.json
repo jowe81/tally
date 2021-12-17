@@ -4,7 +4,8 @@
   "description": "Tally Server for MPCT",
   "main": "server.js",
   "scripts": {
-    "test": "node ./test/tallyTest.js"
+    "test": "node ./test/tallyTest.js",
+    "tally": "node server.js"
   },
   "repository": {
     "type": "git",
