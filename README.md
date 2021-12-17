@@ -27,12 +27,8 @@
 ![Tally in the Terminal](./github/terminal.png)
 ![Cameras Auditorium](./github/cameras-auditorium.jpg)
 
-To actually use Tally, you will need to configure an [MQTT broker](http://mosquitto.org), an [MPCT controller](http://github.com/jowe81/mpctcontroller), and an [MPCT server](http://github.com/jowe81/mpctserver). These need to be properly referenced in [constants.js](./constants.js).
-
-_Important: This is not trivial to set up, and the MPCT repos at this time do not include any instructions for setup. If you really want to try this out, please contact me at johannes@jowe.ca and I'll assist you._ 
-
 ## Run the test file:
-The test generates fake tally data, but needs an MQTT broker to work.
+The test generates fake tally data, and only needs an MQTT broker to work.
 
 ```npm run test```
 
@@ -50,7 +46,13 @@ For production use you will need a physical interface to bring tally data from y
 * [socket.io](https://www.npmjs.com/package/socket.io): ^4.4.0
 * [@jowe81](https://www.npmjs.com/package/@jowe81/lg)/lg: ^1.0.0
 * [mqtt](https://www.npmjs.com/package/mqtt): ^4.2.8
-* Relies on an MPCT compatible MQTT feed (this dependency along with MQTT may be removed in a future version, to support standalone use)
+
+## Other Software
+
+To actually use Tally, you will need to configure an [MQTT broker](http://mosquitto.org), an [MPCT controller](http://github.com/jowe81/mpctcontroller), and an [MPCT server](http://github.com/jowe81/mpctserver). These need to be properly referenced in [constants.js](./constants.js).
+
+_Important: This is not trivial to set up, and the MPCT repos at this time do not include any instructions for setup. If you really want to try this out, please contact me at johannes@jowe.ca and I'll assist you._ 
+
 
 ## Changelog
 * Version 1.0.1 (December 12, 2021)
