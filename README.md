@@ -1,4 +1,4 @@
-# tally
+# Tally
 ## A Software Tally System for Broadcast Switchers
 
 * Use your phone or other browser-enabled device to add a tally light to your camera or CG source
@@ -55,6 +55,8 @@ _Important: This is not trivial to set up, and the MPCT repos at this time do no
 
 
 ## Changelog
+* Version 1.0.2 (December 18, 2021)
+  * Fix UI painting bug: tally data gets now painted properly immediately after adding or removing sources from the tallyboard
 * Version 1.0.1 (December 12, 2021)
   * Selected tallies will now show up in the order they were added to the tallyboard (sources will be added to the right of the board instead of inserted by camera id)
 * Version 1.0.0 (December 9, 2021)

@@ -1,6 +1,6 @@
 {
   "name": "tally",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tally Server for MPCT",
   "main": "server.js",
   "scripts": {
