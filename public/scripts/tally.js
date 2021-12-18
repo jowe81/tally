@@ -35,13 +35,10 @@ const showTimer = (remaining, colorClass) => {
   }
 }
 
-//Paint tally data
-const paintTallyChange = (cam) => {
-
+//Update tally data in the dashboard
+const paintTallyChangeDashboard = (cam) => {
   //Get preview, program or empty string
   const tallyType = getTallyType(cam);
-
-  //Tallies in the dashboard
 
   //-- Remove all classes first
   $(`#db_${cam.id}`).removeClass(['db_program','db_preview','db_selected_program','db_selected_preview','db_','db_selected_']);
@@ -60,10 +57,19 @@ const paintTallyChange = (cam) => {
       $(`#db_${cam.id}`).addClass(`db_selected_`);
     }
   }
+};
 
-  //Tallies in the main section
+//Update tally data in the main section
+const paintTallyChangeMain = (cam) => {
+  //Get preview, program or empty string
+  const tallyType = getTallyType(cam);
   $(`#tl_${cam.id}`).removeClass(['tl_program','tl_preview','tl_']).addClass(`tl_${tallyType}`);  
+};
 
+//Update Tally data in both, the dashboard and main tally area
+const paintTallyChange = (cam) => {
+  paintTallyChangeDashboard(cam);
+  paintTallyChangeMain(cam);
 }
 
 //Draw the UI
@@ -75,6 +81,8 @@ const initUI = (camData) => {
   for (cam of camData) {
     //Show all sources in the dashboard
     $("#dashboard").append(`<div id="db_${cam.id}" class="db-item"><div class="">${cam.name}<div></div>`);
+    //Apply data
+    paintTallyChangeDashboard(cam);
   }
   //Paint main tally board sources in the order they have been added to the board
   for (tallySourceID of myTallies) {
@@ -88,8 +96,8 @@ const initUI = (camData) => {
       $("#tallies").append(`<div id="tl_${cam.id}" class="tl-item"><div class="tl_cam-name">${camLabel}<div></div>`);
       $(`#db_${cam.id}`).addClass('db-item-active');
     }
-    //Init the data
-    paintTallyChange(cam);
+    //Apply data
+    paintTallyChangeMain(cam);
   }
 }
 
